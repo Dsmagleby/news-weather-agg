@@ -1,5 +1,5 @@
 """
-ASGI config for newsAgg project.
+ASGI config for news-weather-agg project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'newsAgg.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'news-weather-agg.settings')
 
 application = get_asgi_application()
