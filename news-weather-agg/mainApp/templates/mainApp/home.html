@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body style="background-color: white;">
+    <div class="jumbotron" style="background-color: rgb(172, 172, 172);">
+      <div class="container">
+        <center>
+          <h1 style="color:black;font-weight: bold;font-size: 80px;">News and Weather</h1>
+          <form method="POST">
+            {% csrf_token %}
+              <div class="input-group mb-3">
+                {{weather.form.name}}
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit">Add City</button>
+                  <a href="{% url 'scrape' %}" class="btn btn-outline-secondary" type="button">Reload News</a>
+                </div>
+              </div>
+          </form>
+        </center>
+      </div>
+    </div>
+  <div class="card-columns" style="padding: 10px; margin-left: 50px;margin-right: 50px;">
+    
+    {% for city_weather in weather.weather_data %} 
+      <div class="card" style="box-shadow: 5px 5px 8px rgb(51, 51, 51);">
+          <article class="media">
+              <div class="media-left">
+                  <figure class="image">
+                      <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="Image"b 7>
+                  </figure>
+              </div>
+              <div class="media-content" style="padding-top: 20px; width: 165px">
+                  <div class="content">
+                      <p>
+                          <span class="title"><b>{{city_weather.city}}</b></span>
+                          <br>
+                          <span class="subtitle">{{city_weather.temperature}}° C</span>
+                          <br> {{city_weather.description}}
+                      </p>
+                  </div>
+              </div>
+              <div style="padding-top: 10px;" >
+                <a href="{% url 'delete_city' city_weather.city %}" class="btn btn-outline-secondary" type="button">Remove</a>
+              </div>
+          </article>
+      </div>
+    {% endfor %}
+    
+    {% for object in object_list %}
+      <div class="card" style="box-shadow: 5px 5px 8px rgb(51, 51, 51);">
+        <img class="card-img-top" src = "{{ object.image }}">
+        <div class="card-body">
+          <h5 class="card-title"><div class="card-body">
+            <a href="{{object.url}}"><h5 class="card-title">{{object.title}}</h5></a>
+          </div></h5>
+          <p class="card-text">{{object.subtitle}}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Source: {{object.source}}</small>
+          </div>
+      </div>
+    {% endfor %}
+</div>
+</div>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
