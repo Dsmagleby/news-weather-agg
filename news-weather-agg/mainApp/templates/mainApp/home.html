@@ -59,7 +59,8 @@
           <p class="card-text">{{object.subtitle}}</p>
           </div>
           <div class="card-footer">
-            <small class="text-muted">Source: {{object.source}}</small>
+            <small class="text-muted">Source: </small>
+            <a href="{{object.url}}"><small class="text-muted">{{object.source}}</small></a>
           </div>
       </div>
     {% endfor %}

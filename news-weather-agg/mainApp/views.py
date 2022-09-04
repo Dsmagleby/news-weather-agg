@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from .models import NewsField, City
 from .forms import CityForm
-from .keys import api_key
+from .keys import *
 
 def wp_scraper(session):
     url = "https://www.washingtonpost.com/"
@@ -50,7 +50,7 @@ def scraper(request):
 
 
 def weatherCall(request):
-    url = 'http://api.openweathermap.org/data/2.5/weather?APPID={}'.format(api_key())
+    url = 'http://api.openweathermap.org/data/2.5/weather?APPID={}'.format(api_key)
     if request.method == 'POST':
         form = CityForm(request.POST)
         if form.is_valid():
@@ -67,7 +67,7 @@ def weatherCall(request):
     for city in cities:
         response = requests.get(url + "&q={}".format(city)).json()
         city_weather = {
-            'city' : city.name,
+            'city' : city.name.capitalize(),
             'temperature' : round(int(response['main']['temp']) - 273.15,2), # convert to celcius
             'description' : response['weather'][0]['description'],
             'icon' : response['weather'][0]['icon'],
@@ -86,6 +86,7 @@ def news_and_weather(request):
     weather_ = weatherCall(request)
     return render(request, "mainApp/home.html", {'object_list': news_, 'weather': weather_})
 
+# does not remove from db
 def delete_city(request, city_name):
     City.objects.get(name=city_name).delete()
     return redirect('home')
