@@ -13,4 +13,4 @@ To get confirm successful deployment and get port:
 $kubectl get svc django
 
 then to access service go to:
-http://localhost:"<port>" 
+http://localhost:"port" 
